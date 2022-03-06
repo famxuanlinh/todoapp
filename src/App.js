@@ -9,14 +9,30 @@ import Footer from './components/Footer';
 import './App.css';
 import './css/Todo.css';
 
-function App() {
+class App extends React.PureComponent {
+  state = {
+    todosList: [{
+      id: 1,
+      text: 'todo 1',
+      isCompleted: true
+    }, {
+      id: 2,
+      text: 'todo 2',
+      isCompleted: false
+    }]
+  }
+  reder() {
+
+    const { todosList } = this.state
     return ( 
-        <div className = "todoapp" >
-          <Header />
-          <TodoList/>
-          <Footer/>
-        </div>
-    );
+      <div className = "todoapp" >
+        <Header />
+        <TodoList todosList={ todosList }/>
+        <Footer/>
+      </div>
+  );
+  }
+    
 }
 
 export default App;
