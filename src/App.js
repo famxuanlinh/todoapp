@@ -19,22 +19,30 @@ class App extends React.PureComponent {
       id: 2,
       text: 'todo 2',
       isCompleted: false
-    }]
+    }],
+    todoEditingId: ''
   }
 addTodo = (todo = {}) => {
-  console.log('todo', todo )
+  //console.log('todo', todo )
   this.setState(preState => ({
     todosList: [...preState.todosList, todo]
   }))
 } 
 
+  getTodoEditingId = (id = '') => {
+    this.setState({ todoEditingId: id })
+  }
   render() {
 
-    const { todosList } = this.state
+    const { todosList, todoEditingId } = this.state
     return ( 
       <div className = "todoapp" >
         <Header addTodo= {this.addTodo} />
-        <TodoList todosList={ todosList }/>
+        <TodoList 
+          todosList={ todosList }
+          getTodoEditingId={this.getTodoEditingId}
+          todoEditingId={todoEditingId}
+          />
         <Footer/>
       </div>
   );

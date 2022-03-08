@@ -9,7 +9,7 @@ const TodoList = memo(props => {
             <label htmlFor='toggle-all'></label>
             <ul className='todo-list'>
                 {
-                    todosList.map(todo => <Todo key={`todo${todo.id}`}{...{ todo }}/>)
+                    todosList.map((todo, index) => <Todo key={`todo${todo.id}`}{...{ todo }} {...props} index={index}/>)
                 }
             </ul>
         </section>
