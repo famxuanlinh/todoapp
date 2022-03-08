@@ -21,12 +21,19 @@ class App extends React.PureComponent {
       isCompleted: false
     }]
   }
-  reder() {
+addTodo = (todo = {}) => {
+  console.log('todo', todo )
+  this.setState(preState => ({
+    todosList: [...preState.todosList, todo]
+  }))
+} 
+
+  render() {
 
     const { todosList } = this.state
     return ( 
       <div className = "todoapp" >
-        <Header />
+        <Header addTodo= {this.addTodo} />
         <TodoList todosList={ todosList }/>
         <Footer/>
       </div>
