@@ -1,20 +1,21 @@
 import React, { memo } from 'react'
 
 const Footer = memo(props => {
+    const { status, setStatusFilter } = props
     const filterBtns = [{
         title: 'All',
-        isActived: true,
-        onClick: () => {},
+        isActived: status === 'ALL',
+        onClick: () => setStatusFilter('ALL'),
         link: ''
     }, {
         title: 'Active',
-        isActived: false,
-        onClick: () => {},
+        isActived: status === 'ACTIVE',
+        onClick: () => setStatusFilter('ACTIVE'),
         link: 'active'
     }, {
         title: 'Completed',
-        isActived: false,
-        onClick: () => {},
+        isActived: status === 'COMPLETED',
+        onClick: () => setStatusFilter('COMPLETED'),
         link: 'completed'
     }
     ]
@@ -29,7 +30,10 @@ const Footer = memo(props => {
             <ul className='filters'>
                 {
                     filterBtns.map(btn => (
-                        <FilterBtn key={`btn${btn.title}`}{...btn} />
+                        <FilterBtn 
+                        key={`btn${btn.title}`}
+                        {...btn}
+                    />
                     ))
                 }
             </ul>

@@ -61,6 +61,15 @@ markCompleted = (id = '') => {
     isCheckedAll: !isNotCheckedAll(updatedList)
   }))
 }
+
+checkAllTodos = () => {
+  const { todosList, isCheckedAll } = this.state
+  this.setState(preState => ({
+    todosList: todosList.map(todo => ({...todo, isCompleted: !isCheckedAll})),
+    isCheckedAll: !preState.isCheckedAll
+  }))
+}
+
   render() {
 
     const { todosList, todoEditingId, isCheckedAll } = this.state
@@ -76,7 +85,8 @@ markCompleted = (id = '') => {
           todoEditingId={todoEditingId}
           onEditTodo = {this.onEditTodo}
           markCompleted={this.markCompleted}
-          isCheckedAll = {isCheckedAll}
+          isCheckedAll={isCheckedAll}
+          checkAllTodos={this.checkAllTodos}
           />
         <Footer/>
       </div>
