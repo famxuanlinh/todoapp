@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react'
 
 const Header = memo(props => {
     const [text, setText] = useState('')
-    const { addTodo } = props
+    const { addTodo, isCheckedAll } = props
     const onAddTodo = (e = {}) => {
         if(e.key === 'Enter' && text) {
             //console.log('Text', text)
@@ -18,11 +18,12 @@ const Header = memo(props => {
     return (
         <header className="header" >
             <h1>todos</h1> 
-            <input 
-            className="new-todo" 
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyPress= {(e) => onAddTodo(e)}
+            <input
+                className="new-todo"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onKeyPress= {(e) => onAddTodo(e)}
+                checked={isCheckedAll}
             />
         </header>
     )

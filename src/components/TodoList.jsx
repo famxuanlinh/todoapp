@@ -2,10 +2,14 @@ import React, { memo } from 'react'
 import Todo from './Todo'
 
 const TodoList = memo(props => {
-    const { todosList } = props
+    const { todosList, isCheckedAll } = props
     return (
         <section className='main'>
-            <input className='toggle-all'/>
+            <input 
+                className='toggle-all' 
+                type='checkbox'
+                checked={isCheckedAll}
+            />
             <label htmlFor='toggle-all'></label>
             <ul className='todo-list'>
                 {
