@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react'
 
 const Todo = memo(props => {
-    const { todo, getTodoEditingId, todoEditingId, onEditTodo, index, markCompleted } = props
+    const { todo, getTodoEditingId, todoEditingId, onEditTodo, index, markCompleted, removeTodo } = props
     const [text, setText] = useState(todo.text)
     const editTodo = () => {
         onEditTodo({
@@ -17,11 +17,11 @@ const Todo = memo(props => {
                     <input 
                     className='toggle' 
                     type='checkbox' 
-                    //checked={todo.isCompleted} 
+                    checked={todo.isCompleted} 
                     onChange={() => markCompleted(todo.id)}
                 />
                     <label onDoubleClick={() => getTodoEditingId(todo.id)}>{todo.text}</label>
-                    <button className='destroy'></button>
+                    <button className='destroy' onClick={() => removeTodo(todo.id)}></button>
                 </div> :
                 <input 
                     className='edit' 

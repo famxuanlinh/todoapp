@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 const Footer = memo(props => {
-    const { status, setStatusFilter } = props
+    const { status, setStatusFilter, numOfTodosLeft, numOfTodos, clearCompleted } = props
     const filterBtns = [{
         title: 'All',
         isActived: status === 'ALL',
@@ -22,9 +22,9 @@ const Footer = memo(props => {
     return (
         <footer className='footer'>
             <span className="todo-count">
-                <strong>2</strong>
+                <strong>{numOfTodosLeft}</strong>
                 <span> </span>
-                <span>items</span>
+                <span>{numOfTodosLeft <= 1 ? 'item' : 'items'}</span>
                 <span> left</span>
             </span>
             <ul className='filters'>
@@ -37,7 +37,7 @@ const Footer = memo(props => {
                     ))
                 }
             </ul>
-            <button className="clear-completed" >Clear completed</button>
+            {numOfTodos > numOfTodosLeft && <button className="clear-completed" onClick={clearCompleted}>Clear completed</button>}
         </footer>
     )
 })

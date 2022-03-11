@@ -10,6 +10,18 @@ import './App.css';
 import './css/Todo.css';
 
 const isNotCheckedAll = (todos = []) => todos.find(todo => !todo.isCompleted)
+const filterByStatus = (todos = [], status = '', id = '') => {
+  switch (status) {
+    case 'ACTIVE':
+      return todos.filter(todo => !todo.isCompleted)
+    case 'COMPLETED':
+      return todos.filter(todo => todo.isCompleted)
+    case 'REMOVE':
+      return todos.filter(todo => todo.id !== id)
+    default:
+      return todos
+  }
+}
 class App extends React.PureComponent {
   state = {
     todosList: [{
@@ -22,7 +34,8 @@ class App extends React.PureComponent {
       isCompleted: false
     }],
     todoEditingId: '',
-    isCheckedAll: false
+    isCheckedAll: true,
+    status: 'ALL'
   }
 
   componentWillMount() {
@@ -65,14 +78,33 @@ markCompleted = (id = '') => {
 checkAllTodos = () => {
   const { todosList, isCheckedAll } = this.state
   this.setState(preState => ({
-    todosList: todosList.map(todo => ({...todo, isCompleted: !isCheckedAll})),
+    todosList: todosList.map(todo => ({ ...todo, isCompleted: !isCheckedAll })),
     isCheckedAll: !preState.isCheckedAll
   }))
 }
 
+setStatusFilter = (status = '') => {
+  this.setState({
+    status
+  })
+}
+
+clearCompleted = () => {
+  const { todosList } = this.state
+  this.setState({
+    todoList: filterByStatus(todosList, 'ACTIVE')
+  })
+}
+removeTodo = (id = '') => {
+  const { todosList } = this.state
+  this.setState({
+    todosList: filterByStatus(todosList, 'REMOVE', id)
+  })
+}
+
   render() {
 
-    const { todosList, todoEditingId, isCheckedAll } = this.state
+    const { todosList, todoEditingId, isCheckedAll, status } = this.state
     return ( 
       <div className = "todoapp" >
         <Header 
@@ -80,15 +112,22 @@ checkAllTodos = () => {
           isCheckedAll = {isCheckedAll}
         />
         <TodoList 
-          todosList={ todosList }
+          todosList={ filterByStatus(todosList, status) }
           getTodoEditingId={this.getTodoEditingId}
           todoEditingId={todoEditingId}
           onEditTodo = {this.onEditTodo}
           markCompleted={this.markCompleted}
           isCheckedAll={isCheckedAll}
           checkAllTodos={this.checkAllTodos}
+          removeTodo={this.removeTodo}
           />
-        <Footer/>
+        <Footer
+          setStatusFilter={this.setStatusFilter}
+          status={status}
+          clearCompleted={this.clearCompleted}
+          numOfTodos={todosList.length}
+          numOfTodosLeft={filterByStatus(todosList, 'ACTIVE').length}
+        />
       </div>
   );
   }
